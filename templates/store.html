@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>BigAuction</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 90px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Store
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <style>
+        #items .card {
+            display: inline-block;
+            margin-bottom: 15px;
+            margin-right: 12px;
+        }
+
+        .jumbotron button {
+            margin-top: 5px;
+            width: 100px;
+        }
+    </style>
+
+    <div id="items" class="container text-center my-3">
+
+        <h1 style="margin-top: 45px;">{{category}}</h1>
+        <div class="dropdown show">
+
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-toggle="dropdown" style="margin-bottom: 0px;" aria-haspopup="true" aria-expanded="false">
+                Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="height: 400px; overflow-y: scroll;">
+                <a class="dropdown-item" href="/store/all/{{id}}">All Items</a>
+                <a class="dropdown-item" href="/store/Baby/{{id}}">Baby</a>
+                <a class="dropdown-item" href="/store/Beauty/{{id}}">Beauty</a>
+                <a class="dropdown-item" href="/store/Books/{{id}}">Books</a>
+                <a class="dropdown-item" href="/store/Camera & Photo/{{id}}">Camera & Photo</a>
+                <a class="dropdown-item" href="/store/Clothing & Accessories/{{id}}">Clothing & Accessories</a>
+                <a class="dropdown-item" href="/store/Consumer Electronics/{{id}}">Consumer Electronics</a>
+                <a class="dropdown-item" href="/store/Grocery & Gourmet Foods/{{id}}">Grocery & Gourmet Foods</a>
+                <a class="dropdown-item" href="/store/Health & Personal Care/{{id}}">Health & Personal Care</a>
+                <a class="dropdown-item" href="/store/Home & Garden/{{id}}">Home & Garden</a>
+                <a class="dropdown-item" href="/store/Industrial & Scientific (BISS)/{{id}}">Industrial & Scientific (BISS)</a>
+                <a class="dropdown-item" href="/store/Luggage & Travel Accessories/{{id}}">Luggage & Travel Accessories</a>
+                <a class="dropdown-item" href="/store/Musical Instruments/{{id}}">Musical Instruments</a>
+                <a class="dropdown-item" href="/store/Office Products/{{id}}">Office Products</a>
+                <a class="dropdown-item" href="/store/Outdoors/{{id}}">Outdoors</a>
+                <a class="dropdown-item" href="/store/Personal Computers/{{id}}">Personal Computers</a>
+                <a class="dropdown-item" href="/store/Pet Supplies/{{id}}">Pet Supplies</a>
+                <a class="dropdown-item" href="/store/Shoes, Handbags & Sunglasses/{{id}}">Shoes, Handbags & Sunglasses</a>
+                <a class="dropdown-item" href="/store/Software/{{id}}">Software</a>
+                <a class="dropdown-item" href="/store/Sports/{{id}}">Sports</a>
+                <a class="dropdown-item" href="/store/Tools & Home Improvement/{{id}}">Tools & Home Improvement</a>
+                <a class="dropdown-item" href="/store/Toys/{{id}}">Toys</a>
+                <a class="dropdown-item" href="/store/Video Games/{{id}}">Video Games</a>
+            </div>
+        </div>
+        <br>
+
+        {% if products %}
+        <div style="margin-bottom: 20px;">
+            <a type="button" id="sortByPrice" href="" class="btn btn-info" style="margin-top: -20px; color: white;"
+                onclick="sortByPrice();">Sort By Price</a>
+            <a type="button" id="noFilter" href="" class="btn btn-info" style="margin-top: -20px; color: white;"
+                onclick="noFilter();">No Filters</a>
+            <a type="button" id="sortByStock" href="" class="btn btn-info" style="margin-top: -20px; color: white;"
+                onclick="sortByStock();">Sort By Amount</a>
+        </div>
+
+        <script>
+            function sortByPrice() {
+                let sortByPrice = document.getElementById("sortByPrice");
+                sortByPrice.href = location.pathname + "?sort=sortByPrice";
+            }
+
+            function noFilter() {
+                let noFilter = document.getElementById("noFilter");
+                noFilter.href = location.pathname;
+            }
+
+            function sortByStock() {
+                let sortByStock = document.getElementById("sortByStock");
+                sortByStock.href = location.pathname + "?sort=sortByStock";
+            }
+        </script>
+
+        {% for product in products %}
+        <div class="card" style="width: 18rem; display: inline-block;">
+            <img src={{product.url}} class="card-img-top" style="width: 100%; height: 200px;">
+
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p style="margin-top: -5px; margin-bottom: 3px;">Price: {{product.price}}</p>
+                <p style="margin-top: -5px; margin-bottom: 3px;">Amount: {{product.amount}} left</p>
+                <p class="card-text">{{product.description|truncate(85)}}</p>
+                <a href="/item/{{product._id}}/{{id}}" class="btn btn-primary" style="display: inline-block;">View Item</a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        <div class="jumbotron" style="margin-top: 32px; padding-top: 35px; padding-bottom: 35px;">
+            <h1 class="display-4">Popular Categories</h1>
+            <hr class="my-4">
+            <a type="button" class="btn btn-primary" href="/store/Software/{{id}}">Software</a>
+            <a type="button" class="btn btn-secondary" href="/store/Personal Computers/{{id}}">Personal Computers</a>
+            <a type="button" class="btn btn-success" href="/store/Office Products/{{id}}">Office Products</a>
+            <a type="button" class="btn btn-danger" href="/store/Shoes, Handbags & Sunglasses/{{id}}">Shoes, Handbags &
+                Sunglasses</a>
+            <a type="button" class="btn btn-warning" style="color: black !important;"
+                href="/store/Outdoors/{{id}}">Outdoors</a>
+            <a type="button" class="btn btn-info" href="/store/Consumer Electronics/{{id}}">Consumer Electronics</a>
+            <a type="button" class="btn btn-dark" href="/store/Sports/{{id}}">Sports</a>
+        </div>
+        {% else %}
+        <h4 style="margin-bottom: 22px; margin-top: -15px;">No more products exist on this page</h4>
+        {% endif %}
+
+        <style>
+            .jumbotron a {
+                margin-top: 7px;
+                color: white !important;
+            }
+        </style>
+
+        <script>
+            function changeStoreExtension() {
+                let seeMore = document.getElementById("seeMore");
+                seeMore.href = location.pathname;
+            }
+
+            function addPageId() {
+                let urlParams = new URLSearchParams(window.location.search);
+                for (let i = 1; i <= 12; i++) {
+                    if (urlParams.has("sort")) {
+                        document.getElementById(i).href = location.pathname + "?sort=" + urlParams.get("sort") + "&pageID=" + (i - 1);
+                    } else {
+                        document.getElementById(i).href = location.pathname + "?pageID=" + (i - 1);
+                    }
+                }
+            }
+
+        </script>
+
+        <div id="numberFooter" class="btn-group mr-2 mover" role="group" aria-label="First group"
+            style="margin: 0 auto; margin-bottom: 8px; margin-top: -10px;">
+
+
+            {% for colour in colours %}
+            <a type="button" id={{colour[0]}} class="btn btn-{{colour[1]}}" onclick="addPageId();" style="color: white;">{{colour[0]}}</a>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

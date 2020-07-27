@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>BigAuction</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-left: -17px;">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 140px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Your Products
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <style>
+        #items .card {
+            display: inline-block;
+            margin-bottom: 15px;
+            margin-right: 12px;
+        }
+
+        .jumbotron button {
+            margin-top: 5px;
+            width: 100px;
+        }
+    </style>
+
+    <div id="items" class="container text-center my-3">
+        <h1 style="margin-top: 45px;">Your Products</h1>
+
+        {% for product in products %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{product.image}}" class="card-img-top" style="width: 100%; height: 200px;">
+
+            <form method="POST" action="/deleteProduct/{{product.id}}/{{id}}">
+                <button type="submit" class="close" aria-label="Close" style="margin-top: -200px; margin-right: 4px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </form>
+
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p style="margin-top: -5px; margin-bottom: 3px;">Price: {{product.price}}</p>
+                <p style="margin-top: -5px; margin-bottom: 3px;">Amount: {{product.stock}} left</p>
+                <p class="card-text">{{product.description}}</p>
+                <a href="/item/{{product.productID}}/{{id}}" class="btn btn-primary">View Item</a>
+            </div>
+
+        </div>
+        {% else %}
+        <div style="margin-top: 8px;">
+            <h3>You have no products currently.</h3>
+            <a href="/sell/{{id}}" class="btn btn-secondary" style="margin-top: 10px;">Sell a Product</a>
+        </div>
+        {% endfor %}
+
+        {% if products %}
+            <div style="margin-top: 20px;">
+                <a href="/sell/{{id}}" class="btn btn-secondary" style="margin-top: 10px;">Sell a Product</a>
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>BigAuction</title>
+</head>
+
+<style>
+    @media screen and (min-width: 1900px) {
+        nav {
+            margin-left: -17px;
+        }
+    }
+</style>
+
+
+<body onload="checkout();">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 90px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cart
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mb-4">
+        <div class="row" style="margin-top: 80px;">
+            <div class="col-12" style="height: 650px; overflow: hidden; overflow-y: scroll; overflow-x: scroll;">
+                <table class="table table-striped">
+                    <thead style="width: 1110px;">
+                        <tr>
+                            <th scope="col" class="text-center" style="width: 250px;">Image</th>
+                            <th scope="col" class="text-center" style="width: 250px;">Product</th>
+                            <th scope="col" class="text-center" style="width: 250px;">Category</th>
+                            <th scope="col" class="text-center" style="width: 250px;">Quantity</th>
+                            <th scope="col" class="text-center" style="width: 250px;">Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="allProducts">
+
+                        {% for product in products %}
+                        <tr>
+                            <td><img src="{{product.url}}" style="width: 200px; height: 130px;" /> </td>
+                            <td class="text-center"><a href="{{product.product}}">{{product.name}}</a></td>
+                            <td class="text-center"><a href="{{product.categoryLink}}">{{product.category}}</a></td>
+                            <td class="quantity text-center">{{product.quantity}}</td>
+                            <td class="price text-center">{{product.price}}</td>
+
+                            <form class="deleteFromCart" method="POST"
+                                action="/deleteFromCart/{{product._id}}/{{product.quantity}}/{{id}}">
+                                <td class="text-center"><button type="submit" id="delete"
+                                        class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></button></td>
+                            </form>
+
+                            <script>
+                                $(".deleteFromCart").submit(function () {
+                                    $(".delete").attr("disabled", "disabled");
+                                });
+                            </script>
+
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Sub-Total</td>
+                            <td class="text-center" id="totalCost"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Shipping</td>
+                            <td class="text-center" id="shipping"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-center" id="total"><strong></strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <script>
+
+                function roundToXDigits(value, digits) {
+                    if (!digits) {
+                        digits = 2;
+                    }
+                    value = value * Math.pow(10, digits);
+                    value = Math.round(value);
+                    value = value / Math.pow(10, digits);
+                    return value;
+                }
+
+                function checkout() {
+                    let quantities = $(".quantity");
+                    let prices = $(".price");
+                    let totalCost = 0
+
+                    for (let i = 0; i < quantities.length; i++) {
+                        let amount = parseInt(quantities[i].innerHTML);
+                        let price = parseInt(prices[i].innerHTML.substring(1));
+                        let cost = amount * price;
+                        totalCost += cost;
+                    }
+
+                    document.getElementById("totalCost").innerHTML = "$" + roundToXDigits(totalCost, 2);
+                    document.getElementById("shipping").innerHTML = "$" + roundToXDigits((totalCost * 0.05), 2);
+                    document.getElementById("total").innerHTML = "$" + roundToXDigits((totalCost + (totalCost * 0.05)), 2);
+                    document.getElementById("totalCost5").value = roundToXDigits(totalCost + (totalCost * 0.05), 2);
+                }
+            </script>
+
+            <div class="col mb-2" style="margin-top: 50px;">
+                {% for message in get_flashed_messages() %}
+                <h4 style="text-align: center; margin-top: -30px; margin-bottom: 20px;">{{ message }}</h4>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <a class="btn btn-lg btn-block btn-secondary" style="color: white;"
+                            href="/store/all/{{id}}">Continue
+                            Shopping</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <form method="POST" action="/checkout/{{id}}">
+                            <button type="submit" class="btn btn-lg btn-block btn-success text-uppercase"
+                                style="text-transform: none !important;">Checkout</button>
+                            <input type="text" id="totalCost5" name="totalCost" style="visibility: hidden;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

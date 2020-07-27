@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+    <title>BigAuction</title>
+</head>
+
+<body onload="checkout();">
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-left: -17px;">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 90px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Store
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="login-form">
+        <form id="checkoutForm" action="/success/{{id}}" method="POST">
+            <h2 class="text-center">Address</h2>
+            <div class="form-group">
+                <input type="text" name="City" class="form-control" placeholder="City" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" name="Country" class="form-control" placeholder="Country" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" name="address" class="form-control" placeholder="Address" required="required" readonly="" onfocus="this.removeAttribute('readonly');" style="background-color: white;">
+            </div>
+            <h2 class="text-center">Payment</h2>
+            <h6 class="text-center">Total: ${{total}}</h6>
+            <div class="form-group">
+                <select id="CreditCardType" name="CreditCardType" class="form-control">
+                    <option value="5">Visa</option>
+                    <option value="6">MasterCard</option>
+                    <option value="7">American Express</option>
+                    <option value="8">Discover</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="Credit Card Number" id="ccd" class="form-control" placeholder="Credit Card Number" readonly="" onfocus="this.removeAttribute('readonly');" required="required" style="background-color: white;">
+            </div>
+            <div class="form-group">
+                <input type="password" name="Card CV" class="form-control" placeholder="Card CV" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Check Out</button>
+            </div>
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>

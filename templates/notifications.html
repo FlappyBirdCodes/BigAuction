@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-left: -34px;">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 140px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Notifications
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="page-header" style="margin: 0 auto; margin-top: 40px; width: 700px; text-align: center;">
+        <h2>Notifications</h2>
+        <h6 style="font-weight: normal;">All proucts must be shipped to BigAuction headquarters at 323 Johnson White Road. Please indicate
+        if you have shipped the product. Failure to ship the product within 7 days will result in fines and penalties.</h6>
+    </div>
+
+    <div class="notifications" style="width: 850px; margin: 0 auto; margin-top: 20px;">
+        <ul class="notification-list">
+            <li>
+                
+                {% if notifications %}
+                {% for notification in notifications %}
+
+                <div class="media" style="text-align: center; margin-top: 3px; background-color: lightgray;">
+                    <div class="media-body">
+                        <p style="display: inline-block; float: left; margin-left: 10px; margin-top: 23px;">{{notification.time}}</p>
+                        <p class="media-heading" style="display: inline-block; width: 500px; margin-top: 12px;">{{notification.message}}</p>
+                        <form style="display: inline-block; float: right;" method="POST" action="/{{notification.action}}/{{id}}/{{notification.notificationId}}">
+                            <button type="submit" class="btn btn-success" style="margin-right: 20px; margin-top: 20px; width: 100px;">{{notification.label}}</button>
+                        </form>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+                {% else %}
+                <h4 style="text-align: center;">You have no notifications currently.</h4>
+                {% endif %}
+
+            </li>
+        </ul>
+    </div>
+
+    <style>
+        .notification-list,
+        .n-user-list {
+            list-style: outside none none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .notification-list>li {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+            padding: 5px 0;
+        }
+
+        .notification-list .cat-icon {
+            width: 20px;
+        }
+
+        .notification-list .avatar {
+            width: 30px;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .n-user-list {
+            margin-bottom: 5px;
+        }
+
+        .n-user-list:after {
+            clear: both;
+            content: '';
+            display: table;
+        }
+
+        .n-user-list li {
+            float: left;
+        }
+
+        .n-user-list li+li {
+            margin-left: 3px;
+        }
+
+        .n-user-list li a,
+        .n-user-list li a:hober {
+            text-decoration: none;
+        }
+    </style>
+
+</html>

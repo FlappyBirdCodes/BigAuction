@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>BigAuction</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-left: -17px;">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 90px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sell
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <form style="margin-top: 80px;" id="createForm" action="#">
+        <div class="container" style="height: 500px;">
+            <div class="row">
+                <div class="col-md-6 border card-body">
+                    <h4 style="margin-bottom: 15px;">Create Your Product Profile:</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Product Name: </label>
+                            <input id="Full Name" name="productName" class="form-control" type="text" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Price: </label>
+                            <input id="price" name="price" class="form-control" required="required" type="text"
+                                value="$">
+                        </div>
+
+                        <script>
+                            function isNumber() {
+
+                                //Price
+                                let price = document.getElementById("price").value;
+                                price = price.substring(1)
+                                price = parseFloat(price)
+
+                                //Stock amount
+                                let stock = parseFloat(document.getElementById("stockamount").value);
+
+                                if (isNaN(price)) {
+                                    alert("The price must be a number.");
+                                } else if (!Number.isInteger(stock)) {
+                                    alert("The stock amount must be an integer.");
+                                } else if (document.getElementById("price").value.charAt(0) != "$") {
+                                    alert("Price must begin with a dollar sign.")
+                                } else {
+                                    document.getElementById("createForm").method = "POST";
+                                    document.getElementById("createForm").action = "/addProduct/{{id}}";
+                                }
+                            }
+
+                        </script>
+
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Stock Amount: </label>
+                            <input id="stockamount" name="stockAmount" class="form-control" required="required"
+                                type="text">
+                        </div>
+                        <div class="form-group col-md-6" required>
+
+                            <label>Category: </label>
+                            <select id="inputState" name="category" class="form-control" required>
+
+                                <option>Baby</option>
+                                <option>Beauty</option>
+                                <option>Books</option>
+                                <option>Camera & Photo</option>
+                                <option>Clothing & Accessories</option>
+                                <option>Consumer Electronics</option>
+                                <option>Grocery & Gourmet Foods</option>
+                                <option>Health & Personal Care</option>
+                                <option>Home & Garden</option>
+                                <option>Industrial & Scientific (BISS)</option>
+                                <option>Luggage & Travel Accessories</option>
+                                <option>Musical Instruments</option>
+                                <option>Office Products</option>
+                                <option>Outdoors</option>
+                                <option>Personal Computers</option>
+                                <option>Pet Supplies</option>
+                                <option>Shoes, Handbags & Sunglasses</option>
+                                <option>Software</option>
+                                <option>Sports</option>
+                                <option>Tools & Home Improvement</option>
+                                <option>Toys</option>
+                                <option>Video Games</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 12px;">Add a Profile Picture:</h4>
+                    <div class="form-group">
+                        <label for="textarea" class="control-label col-xs-4">Your file must be converted to a direct
+                            link first. Do this <a href="https://postimages.org/" target="_blank">here</a>.</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input id="Full Name" name="url" placeholder="Image URL" class="form-control"
+                                    type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 border card-body ">
+                    <div class="form-row">
+                        <h4>Add Description:</h4>
+                        <div class="form-group">
+                            <label for="textarea" class="control-label col-xs-4">Include Any Relevant Information About
+                                Your Product:</label>
+                            <div class="col-xs-8">
+                                <textarea id="textarea" name="description" cols="90" rows="8" class="form-control"
+                                    minlength="90" style="resize: none;" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin: 0 auto;">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2"
+                                            required>
+                                        <label class="form-check-label" for="invalidCheck2">
+                                            <small>By clicking Submit, you agree to our Terms & Conditions, Visitor
+                                                Agreement and Privacy Policy.</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger" onclick="isNumber();"
+                            style="float: right; margin-top: -5%; margin-left: 80%;">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div style="text-align: center; margin-top: -50px;">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <h3>{{ message }}</h3>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>BigAuction</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    style="width: 90px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Home
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/homepage/{{id}}">Home</a>
+                    <a class="dropdown-item" href="/store/all/{{id}}">Store</a>
+                    <a class="dropdown-item" href="/yourCart/{{id}}">Cart</a>
+                    <a class="btn btn-primary dropdown-item" href="/notifications/{{id}}">Notifications <span class="badge badge-dark">{{count}}</span></a>
+                    <a class="dropdown-item" href="/sell/{{id}}">Sell</a>
+                    <a class="dropdown-item" href="/yourProducts/{{id}}">Your Products</a>
+                    <a class="dropdown-item" href="/login">Log Out</a>
+                </div>
+            </div>
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/search/{{id}}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading" style="font-size: 60px;">Welcome back {{username}}</h1>
+            <p class="lead text-muted mb-0"><strong>Here's what we recommend for you. Check it out.</strong> </p>
+        </div>
+    </section>
+
+    <div class="container text-center my-3">
+        <h3>Recommended For You</h3>
+        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+            <div class="carousel-inner w-100" role="listbox">
+                <div class="carousel-item row no-gutters active">
+                    {% for product in products1 %}
+                    <div class="col-3 float-left"><a href="/item/{{product.id}}/{{id}}"><img class="img-fluid" style="width: 100%; height: 250px;"
+                                src="{{product.url}}"></a></div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-item row no-gutters">
+                    {% for product in products2 %}
+                    <div class="col-3 float-left"><a href="/item/{{product.id}}/{{id}}"><img class="img-fluid" style="width: 100%; height: 250px;"
+                                src="{{product.url}}"></a></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <div class="jumbotron" style="margin-top: 25px; padding-top: 35px; padding-bottom: 35px;">
+            <h1 class="display-4">Popular Categories</h1>
+            <hr class="my-4">
+            <a type="button" class="btn btn-primary" href="/store/Software/{{id}}">Software</a>
+            <a type="button" class="btn btn-secondary" href="/store/Personal Computers/{{id}}">Personal Computers</a>
+            <a type="button" class="btn btn-success" href="/store/Office Products/{{id}}">Office Products</a>
+            <a type="button" class="btn btn-danger" href="/store/Shoes, Handbags & Sunglasses/{{id}}">Shoes, Handbags &
+                Sunglasses</a>
+            <a type="button" class="btn btn-warning" style="color: black !important;"
+                href="/store/Outdoors/{{id}}">Outdoors</a>
+            <a type="button" class="btn btn-info" href="/store/Consumer Electronics/{{id}}">Consumer Electronics</a>
+            <a type="button" class="btn btn-dark" href="/store/Sports/{{id}}">Sports</a>
+        </div>
+
+        <div class="alert alert-primary" role="alert" style="margin-top: -8px;">
+            Wanna just browse random items in the store? Click <a href="/store/all/{{id}}" class="alert-link">here</a>.
+        </div>
+
+        <style>
+            .jumbotron a {
+                margin-top: 7px;
+                color: white !important;
+            }
+        </style>
+
+    </div>
+
+</body>
+
+</html>
